@@ -198,23 +198,23 @@ h2{
   flex-direction: column;
   }
   
-  .start-list,
-  .start-table,
-  .start-shape{
+  .c-list,
+  .c-table,
+  .c-shape{
   width: 100%;
   background-color: rgb(0, 255, 13);
   margin: 0 auto;
   margin-top: 5%;
   }
   
-  .start-list{
+  .c-list{
   order: 2;
   }
   
-  .start-table{
+  .c-table{
   order: 1;
   }
   
-  .start-shape{
+  .c-shape{
   order: 3;
   }
