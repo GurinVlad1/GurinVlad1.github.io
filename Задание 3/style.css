@@ -17,6 +17,7 @@ footer{
 
 /*Настройки для таблицы*/
 table {
+    width: 100%;
     border-collapse: collapse; 
     line-height: 1.1;
     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
