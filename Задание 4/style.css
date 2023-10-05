@@ -1,0 +1,91 @@
+
+footer{
+  font-size: 36px;
+  width: 100%;
+  display: block;
+  background-color: #9900ff;
+}
+
+/*Настройки для таблицы*/
+table {
+    width: 100%;
+    border-collapse: collapse; 
+    line-height: 1.1;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    background:  radial-gradient(farthest-corner at 50% 50%, white, #DCECF8);
+    color: #0C213B;
+  }
+  caption {
+    font-size: 2em;
+    padding: 10px; 
+    color: #f50000;
+    text-shadow: 1px 1px 0 rgba(0,0,0,.3);
+   }
+  th {
+    padding: 10px; 
+    border: 1px solid #000000;
+  }
+  td {
+    font-size: 0.8em;
+    padding: 5px 7px;
+    border: 1px solid #010202;
+  }
+  .first {
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .chet{
+    background-color: #09ff00;
+  }
+
+  .nechet{
+    background-color: #f50000;
+  }
+
+  header{
+    width: 100%;
+    background-color: rgb(174, 0, 255);
+    height: 110px;
+}
+
+.navbar{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.container-fluid{
+    flex-wrap: wrap;
+    padding-right: 0;
+    padding-left: 0;
+    max-width: 100%;
+}
+
+#logotype{
+  float: left;
+  margin: 10px;
+  width: 100px;
+  height: 100px;
+}
+
+.navigation{
+    margin: 0;
+    background-color: rgb(0, 140, 255);
+}
+.nav-link{
+    font-size: 170%;
+    color: rgb(0, 0, 0);
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+
+    .nav-link{
+        font-size: 100%;
+    }
+
+    .name{
+        font-size: 140%;
+    }
+
+}
