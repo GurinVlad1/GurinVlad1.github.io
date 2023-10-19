@@ -1,6 +1,3 @@
-var window = window;
-var document = document;
-
 window.addEventListener("DOMContentLoaded", function () {
   var radios = document.getElementsByName("services");
   var count = document.getElementById("counts");
@@ -11,24 +8,24 @@ window.addEventListener("DOMContentLoaded", function () {
   for (var i = 0; i < radios.length; i++) {
     radios[i].addEventListener("change", function () {
       if (this !== null) {
-        changeForm(this);
+        changes(this);
         service = this;
-        var optionAndFeatures = document.getElementById("optionAndFeatures");
-        var addPrice = 0;
-        optionAndFeatures.addEventListener("change", function () {
-          addPrice = checkAddServices(service.value);
+        var calcOption = document.getElementById("calcOption");
+        var Stoim = 0;
+        calcOption.addEventListener("change", function () {
+          Stoim = checkServices(service.value);
         })
         count.value = "";
         var cnt;
-        count.addEventListener("input", function () {
+        count.addEventListener("change", function () {
           cnt = this.value;
         })
         document.addEventListener("change", function () {
           if (typeof(cnt) !== "undefined") {
-            if (!count.value.match(/[^0-9]/) && !count.value.match(/^\s*$/)) {
-              findTotalPrice(service, addPrice, cnt);
+            if (!isNaN(Number(cnt)) && cnt !== "") {
+              showTotalPrice(service, Stoim, Number(cnt));
             } else {
-              clearTotalPrice();
+              document.getElementById("totalPrice").innerHTML = "";
             }
           }
         })
@@ -38,22 +35,8 @@ window.addEventListener("DOMContentLoaded", function () {
 });
 
 var servicesInfo = {
-  sto : {
-    mainPrice : 10000,
-    features : {
-      shodrazval : {
-        addPrice : 15000,
-        title : "Сход развал"
-      },
-      dvig : {
-        addPrice : 30000,
-        title : "Осмотр двигателя"
-      },
-      Shinamontage : {
-        addPrice : 14000,
-        title : "Шиномонтаж"
-      }
-    }
+  fullWashandClin : {
+    mainPrice : 30000
   },
   NewMachine : {
     mainPrice : 500000,
@@ -72,95 +55,100 @@ var servicesInfo = {
       }
     }
   },
-  fullWashandClin : {
-    mainPrice : 30000
-  }
-}
-
-function changeForm(radio) {
-  var optionAndFeatures = document.getElementById("optionAndFeatures");
-  optionAndFeatures.innerHTML = "";
-  var service = servicesInfo[radio.value];
-  if (Object.keys(service).length === 2) {
-    if ("options" === Object.keys(service)[1]) {
-      var optionsSelect = document.createElement("select");
-      optionsSelect.classList.add("text");
-      optionsSelect.name = "options";
-      optionsSelect.id = "option_select";
-      optionsSelect.style.marginLeft = "10px";
-      var option = document.createElement("option");
-      option.value = " ";
-      option.innerHTML = "Список опций";
-      optionsSelect.appendChild(option);
-      for (var key in service.options) {
-        var option = document.createElement("option");
-        option.value = key;
-        option.innerHTML = service.options[key].title;
-        optionsSelect.appendChild(option);
-      }
-      var p = document.createElement("p");
-      var label = document.createElement("label");
-      label.classList.add("text");
-      label.htmlFor = "option_select";
-      label.innerHTML += "Выберите опцию к услуге";
-      p.appendChild(label);
-      p.appendChild(optionsSelect);
-      optionAndFeatures.appendChild(p);
-    } else if ("features" === Object.keys(service)[1]) {
-      var fieldset = document.createElement("fieldset");
-      var legend = document.createElement("legend");
-      legend.classList.add("text");
-      legend.innerHTML = "Выберите свойство/свойства услуги";
-      fieldset.appendChild(legend);
-      optionAndFeatures.appendChild(fieldset);
-      for (var key in service.features) {
-        var feature = document.createElement("input");
-        feature.type = "checkbox";
-        feature.value = key;
-        feature.name = "features";
-        feature.checked;
-        var legend = document.createElement("legend");
-        legend.classList.add("text");
-        legend.classList.add("features");
-        legend.appendChild(feature);
-        fieldset.appendChild(legend);
-        legend.innerHTML += service.features[key].title;
+  sto : {
+    mainPrice : 10000,
+    features : {
+      shodrazval : {
+        addPrice : 15000,
+        title : "Сход развал"
+      },
+      dvig : {
+        addPrice : 30000,
+        title : "Осмотр двигателя"
+      },
+      Shinamontage : {
+        addPrice : 14000,
+        title : "Шиномонтаж"
       }
     }
   }
 }
 
-function checkAddServices(serviceValue) {
-  var optionalServicesPrice = 0;
+function changes(radio) {
+  var calcOption = document.getElementById("calcOption");
+  calcOption.innerHTML = "";
+  var service = servicesInfo[radio.value];
+  if (Object.keys(service).length === 2) {
+    if ("options" === Object.keys(service)[1]) {
+      var options = document.createElement("select");
+      options.classList.add("text");
+      options.name = "options";
+      options.id = "select";
+      var option = document.createElement("option");
+      option.value = " ";
+      option.innerHTML = "Опции";
+      options.appendChild(option);
+      for (var value in service.options) {
+        var option = document.createElement("option");
+        option.value = value;
+        option.innerHTML = service.options[value].title;
+        options.appendChild(option);
+      }
+      var p = document.createElement("p");
+      var label = document.createElement("label");
+      label.classList.add("text");
+      label.htmlFor = "select";
+      label.innerHTML += "Опция";
+      p.appendChild(label);
+      p.appendChild(options);
+      calcOption.appendChild(p);
+    } else if ("features" === Object.keys(service)[1]) {
+      var label = document.createElement("label");
+      label.classList.add("text");
+      label.innerHTML = "Свойства";
+      calcOption.appendChild(label);
+      for (var value in service.features) {
+        var feature = document.createElement("input");
+        feature.type = "checkbox";
+        feature.value = value;
+        feature.name = "features";
+        var label = document.createElement("label");
+        label.classList.add("text");
+        label.classList.add("features");
+        label.appendChild(feature);
+        calcOption.appendChild(label);
+        label.innerHTML += service.features[value].title;
+      }
+    }
+  }
+}
+
+function checkServices(serviceValue) {
+  var optionalPrice = 0;
   var features = document.getElementsByClassName("features");
-  var options = document.getElementById("option_select");
+  var options = document.getElementById("select");
   if (features.length !== 0) {
     for (var feature of features) {
       var featuresList = servicesInfo[serviceValue].features;
       var featureValue = feature.children[0].value;
       if (feature.children[0].checked) {
-        optionalServicesPrice += featuresList[featureValue].addPrice;
+        optionalPrice += featuresList[featureValue].addPrice;
       }
     }
   } else if (options.length !== 0) {
     var optionsList = servicesInfo[serviceValue].options;
     var optionValue = options.value;
     if (optionValue != " ") {
-      optionalServicesPrice += optionsList[optionValue].addPrice;
+      optionalPrice += optionsList[optionValue].addPrice;
     }
   }
-  return optionalServicesPrice;
+  return optionalPrice;
 }
 
-function findTotalPrice(service, addPrice, count) {
+function showTotalPrice(service, Stoim, cnt) {
   var serviceInfo = servicesInfo[service.value];
-  var servicePrice = serviceInfo.mainPrice + addPrice;
-  var totalPrice = servicePrice*count;
-  totalPrice = String(totalPrice).replace(/(\d)(?=(\d{3})+$)/mg, '$1 ');
+  var servicePrice = serviceInfo.mainPrice + Stoim;
+  var totalPrice = servicePrice*cnt;
   var totalMessage = totalPrice + " Rub";
-  document.getElementsByClassName("final_price")[0].innerHTML = totalMessage;
-}
-
-function clearTotalPrice() {
-  document.getElementsByClassName("final_price")[0].innerHTML = "";
+  document.getElementById("totalPrice").innerHTML = totalMessage;
 }
