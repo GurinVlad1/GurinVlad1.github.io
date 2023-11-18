@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="style.css" />
+        <script defer src="jquery-3.7.1.js"></script>
+        <script defer src="main.js"></script>
+        <title>Задание 8</title>
+    </head>
+
+    <button class="openPopup" type="button" rel="popup">
+      <p class="button-text">Открыть popup</p>
+  </button>
+
+  <div class="popup" id="popup">
+    <button type="button" class="closePopup" onclick="closePopup()">&times;</button>
+      <div class="popupContainer">
+        <form method="POST">
+          <action="https://api.slapform.com/{index.html}">
+            <h1>Форма HTML</h1>
+          <br><label>
+            ФИО:<br />
+            <input name="field-name-1"
+            placeholder="Введите ФИО" />
+          </label><br />
+
+          <br><label>
+            Почта email:<br />
+            <input name="field-email"
+              type="email"
+              placeholder="Введите вашу почту" />
+          </label><br />
+
+          <br><label>
+            Номер телефона:<br />
+            <input name="field-number"
+             type="number"
+             placeholder="Введите номер телефона"
+          </label><br />
+
+         <br><label>
+           Организации:<br />
+           <input name="field-name-3"
+           placeholder="Введите название организации"  
+         </label><br />
+
+         <br><label>
+           Сообщение<br />
+           <textarea name="field-name-2" placeholder="Введите своё сообщение"></textarea>
+         </label><br />
+
+         <b>Согласие на обработку</br> персональных нанных</b>
+         <label>
+           <li>С документом ознакомлен(а)
+           <input type="checkbox"
+           name="check-1" />
+
+           <p><input type="submit" value="Отправить"></p>
+           </label><br /></li>
+          </form>
+     </div>
+  </div>
+</html>
