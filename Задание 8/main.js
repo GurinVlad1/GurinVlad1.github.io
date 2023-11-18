@@ -1,19 +1,19 @@
 const popup = document.getElementsByClassName("popup")[0];
 const infomsg = document.getElementsByClassName("infomsg")[0];
 window.addEventListener("DOMContentLoaded", function () {
-  const popupOpenButton = document.getElementsByClassName("openPopup")[0];
-  const popupCloseButton = document.getElementsByClassName("closePopup")[0];
-  const sendInfoButton = document.getElementsByClassName("submit")[0];
-  popupOpenButton.addEventListener("click", function() {
+  const OpenButton = document.getElementsByClassName("openPopup")[0];
+  const CloseButton = document.getElementsByClassName("closePopup")[0];
+  const InfoButton = document.getElementsByClassName("submit")[0];
+  OpenButton.addEventListener("click", function() {
       openPopup();
   });
   addEventListener("popstate", function(event) {
       closePopup();
   });
-  popupCloseButton.addEventListener("click", function() {
+  CloseButton.addEventListener("click", function() {
       closePopup();
   });
-  sendInfoButton.addEventListener("click", function(event) {
+  InfoButton.addEventListener("click", function(event) {
       event.preventDefault();
       submitForm();
   });
@@ -30,7 +30,7 @@ function closePopup() {
 }
 
 function submitForm() {
-  const formData = {
+  const saveForm = {
       FIO: document.getElementsByName("field-name-1")[0].value,
       Email: document.getElementsByName("field-email")[0].value,
       Number: document.getElementsByName("field-number")[0].value,
@@ -41,16 +41,16 @@ function submitForm() {
   var slapform = new Slapform();
   slapform.submit({
       form: 'ryb0Sgwtn',
-      data: formData,
+      data: saveForm,
   })
       .then(function (response) {
           console.log('Success', response);
-          infomsg.innerHTML = 'Успех';
+          infomsg.innerHTML = 'Выполненно успешно';
           clearForm();
       })
       .catch(function (e) {
           console.error('Fail', e);
-          infomsg.innerHTML = 'Ошибка';
+          infomsg.innerHTML = 'Не получилось выполнить';
       })
 }
 
@@ -74,23 +74,23 @@ function clearForm() {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    let savedFormData = localStorage.getItem('formData');
-    if (savedFormData) {                                 
-      savedFormData = JSON.parse(savedFormData);         
-      document.getElementById('subject').value = savedFormData.subject; 
-      document.getElementById('message').value = savedFormData.message; 
-      localStorage.removeItem('formData');       
+    let savedForm = localStorage.getItem('saveForm');
+    if (savedForm) {                                 
+      savedForm = JSON.parse(savedForm);         
+      document.getElementById('subject').value = savedForm.subject; 
+      document.getElementById('message').value = savedForm.message; 
+      localStorage.removeItem('saveForm');       
     }
   
     window.addEventListener('beforeunload', e => {        
       let subj = document.getElementById('subject').value,
           msg  = document.getElementById('message').value; 
       if (subj.length || msg.length) {             
-        let formData = {                              
+        let saveForm = {                              
           subject: subj, 
           message: msg
         };
-        localStorage.setItem('formData', JSON.stringify(formData)); 
+        localStorage.setItem('saveForm', JSON.stringify(saveForm)); 
       }
     }); 
   });
